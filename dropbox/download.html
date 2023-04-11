@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Dropbox Image Retrieval Example</title>
+  </head>
+  <body>
+   
+    <img id="image" alt="Dropbox image">
+    <button id='btn' >Choose File</button>
+    <script src="https://unpkg.com/dropbox/dist/Dropbox-sdk.min.js"></script>
+    <script src="https://www.dropbox.com/static/api/2/dropins.js" id="dropboxjs" data-app-key="4he6dpfw888my33"></script>
+  </body>
+ <script>
+   // var ACCESS_TOKEN ='sl.BZXYP15PERbeMrbWmGkQaZiIFLGvaqxjouxvZNrbiHe9wHyz_RTFfq15OtKCEMJv8bSIN3E-yB6MrTeXLqR4BVMjI_2CbFfug24G9owYcQMl9a0XrylwE0kpOHOtJfr4ZnYjzuE';
+//var dbx = new Dropbox.Dropbox({ accessToken: ACCESS_TOKEN });
+
+//var sharedLink = 'https://www.dropbox.com/s/abc123/your-image.jpg?dl=0';
+
+// Extract the file path from the shared link
+//var filePath = sharedLink.substring(sharedLink.indexOf('/s/') + 3, sharedLink.indexOf('?dl=0'));
+
+// Get the shared link of the image file you want to retrieve
+
+var button = document.getElementById('btn');
+button.addEventListener('click', function() {
+    console.log("cliced");
+  Dropbox.choose({
+    linkType: 'direct',
+    extensions: ['.jpg', '.jpeg', '.png'],
+    success: function(files) {
+      var imageURL = files[0].link;
+      var img = document.createElement('img');
+      img.src = imageURL;
+      document.body.appendChild(img);
+    }
+  });
+});
+ </script>
+</html>

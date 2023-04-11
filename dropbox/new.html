@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Dropbox Chooser API Example</title>
+    
+    <script src="https://www.dropbox.com/static/api/2/dropins.js" id="dropboxjs" data-app-key="4he6dpfw888my33"></script>
+  </head>
+  <body>
+    <button onclick="choose()" id="click">Choose File</button>
+    <script>
+     
+function choose(){
+    Dropbox.choose({
+    success: function(files) {
+      var file = files[0];
+      var options = {
+        files: [
+          {
+            name: file.name,
+            url: file.link
+          }
+        ]
+      };
+      Dropbox.filesUpload(options)
+        .then(function(response) {
+          console.log(response);
+        })
+        .catch(function(error) {
+          console.error(error);
+        });
+    },
+    
+    linkType: 'direct',
+    multiselect: false
+  });
+}
+ 
+    </script>
+  </body>
+</html>
