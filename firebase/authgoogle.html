@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+
+</head>
+<body>
+ 
+    <button  name="signUpBtn" id="signUpBtn">SignUp</button>
+    <button type="button" name="signInBtn" id="signInBtn">signout</button>
+
+        
+</body>
+
+
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-app.js";
+    import { getDatabase,set,ref,update } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-database.js";
+    import { getFirestore,doc, addDoc,collection,updateDoc,deleteDoc,getDocs  } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-firestore.js";
+    import {  getAuth, createUserWithEmailAndPassword,signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-auth.js";
+    import { getStorage } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-storage.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-analytics.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+  
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+      apiKey: "AIzaSyAel-TqcY3raYcXpI6Nqu_V-4T5SG-DDuY",
+      authDomain: "fir-curd-6217f.firebaseapp.com",
+      projectId: "fir-curd-6217f",
+      storageBucket: "fir-curd-6217f.appspot.com",
+      messagingSenderId: "391778698348",
+      appId: "1:391778698348:web:d8bfac1ff20a58c4bfc449",
+      measurementId: "G-61KL73TQW4"
+    };
+  
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const db = getFirestore(app);
+    const database = getDatabase(app);
+    const storage = getStorage(app);
+    
+
+const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
+signUpBtn.addEventListener('click',(e)=>{
+    alert('click');
+    console.log("hi")
+    signInWithPopup(auth, provider)
+  .then((result) => {
+    // This gives you a Google Access Token. You can use it to access the Google API.
+    const credential = GoogleAuthProvider.credentialFromResult(result);
+    const token = credential.accessToken;
+    // The signed-in user info.
+    const user = result.user;
+    alert(user)
+    // IdP data available using getAdditionalUserInfo(result)
+    // ...
+  }).catch((error) => {
+    // Handle Errors here.
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    // The email of the user's account used.
+    const email = error.customData.email;
+    // The AuthCredential type that was used.
+    const credential = GoogleAuthProvider.credentialFromError(error);
+    alert(error)
+    // ...
+  });
+    
+})
+</script>
+</html>

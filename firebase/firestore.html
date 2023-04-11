@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" placeholde="email" id="email">
+    <input type="text"     placeholder="password" id="pwd">
+    <button type="button" id="btn">ADD</button>
+    <button type="button" id="ubtn">UpDate</button>
+
+</body>
+<h1 id="data"></h1>
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-analytics.js";
+    import { getFirestore,doc,collection,addDoc,getDocs,updateDoc,deleteDoc } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-firestore.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+  
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+      apiKey: "AIzaSyAel-TqcY3raYcXpI6Nqu_V-4T5SG-DDuY",
+      authDomain: "fir-curd-6217f.firebaseapp.com",
+      databaseURL: "https://fir-curd-6217f-default-rtdb.firebaseio.com",
+      projectId: "fir-curd-6217f",
+      storageBucket: "fir-curd-6217f.appspot.com",
+      messagingSenderId: "391778698348",
+      appId: "1:391778698348:web:d8bfac1ff20a58c4bfc449",
+      measurementId: "G-61KL73TQW4"
+    };
+  
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const db=getFirestore(app);
+
+    btn.addEventListener('click',(e)=>{
+        var email=document.getElementById('email').value;
+        var pwd=document.getElementById('pwd').value;
+        addDoc(collection(db,"user2"),{
+            email:email,
+            password:pwd
+        }).then(()=>alert("Data added"))
+          .catch(()=>alert("ERROR on adding"));
+
+    })
+    getDocs(collection(db,"user2")).then((snap)=>{
+        let users=[]
+        snap.forEach((document)=>{
+users.push({...document.data(),id:document.id})
+        })
+        console.log("all data fetched");
+        console.log(users)
+        document.getElementById('data').innerHTML=users
+    })
+
+    ubtn.addEventListener('click',(e)=>{
+        var email=document.getElementById('email').value;
+        var pwd=document.getElementById('pwd').value;
+        updateDoc(doc(db,"user2","WpjaXjRxkk1sVJMkWRsw"),{
+            email:email,
+            password:pwd
+        }).then(()=>{
+            alert("updated")
+        }).catch(e=>alert(e))
+    })
+
+    
+  </script>
+</html>
